@@ -1,11 +1,18 @@
 const mongoose = require("mongoose");
-
-// Define the MongoDB connection URL
 require("dotenv").config();
-const mongo_LOCAL_URL = process.env.MONGODB_LOCAL_URL; // Replace mydatabases with your database name
+// Define the MongoDB connection URL
+// const mongo_LOCAL_URL = process.env.MONGODB_LOCAL_URL; // Replace mydatabases with your database name
 const mongoURL = process.env.MONGOD_URL;
+
+if (!mongoURL) {
+  throw new Error("MONGODB_URI is not defined in the environment variables.");
+}
+
 // set up MongoDB connection
-mongoose.connect(mongoURL);
+mongoose.connect(mongoURL, {
+  useNewUrlPraser: true,
+  useUnifiedTopology: true,
+});
 
 // Get the default connection
 // Mongoose maintain a default connection object representing the MongoDB connection
